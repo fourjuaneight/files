@@ -27,7 +27,7 @@ const createHash = async (data: ArrayBuffer) => {
 
     return hashHex;
   } catch (error) {
-    console.log(error);
+    console.log('createHash', error);
     throw `Creating hash:\n${error}`;
   }
 };
@@ -73,7 +73,7 @@ const authTokens = async (): Promise<B2AuthTokens> => {
 
     return data;
   } catch (error) {
-    console.log(error);
+    console.log('authTokens', error);
     throw `Getting B2 authentication keys: \n ${error}`;
   }
 };
@@ -121,7 +121,7 @@ const getUploadUrl = async (): Promise<B2UploadTokens> => {
       downloadUrl: authData?.downloadUrl ?? '',
     };
   } catch (error) {
-    console.log(error);
+    console.log('getUploadUrl', error);
     throw `Getting B2 upload URL: \n ${error}`;
   }
 };
@@ -171,7 +171,7 @@ const uploadToB2 = async (
 
     return `${authData?.downloadUrl}/file/${B2_BUCKET_NAME}/${results.fileName}`;
   } catch (error) {
-    console.log(error);
+    console.log('uploadToB2', error);
     throw `Uploading file to B2 - ${name}: \n ${error}`;
   }
 };
@@ -187,7 +187,7 @@ export const getMediaUrl = async (
 
     return coverUrl;
   } catch (error) {
-    console.log(error);
+    console.log('getMediaUrl', error);
     throw `${error}`;
   }
 };

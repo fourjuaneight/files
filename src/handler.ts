@@ -29,7 +29,7 @@ const handleFileUpload = async (name: string, ext: string, file: File) => {
 
     return new Response(url, responseInit);
   } catch (error) {
-    console.log(error);
+    console.log('handleFileUpload', error);
     return new Response(JSON.stringify({ error }), errReqBody);
   }
 };
@@ -44,7 +44,7 @@ const getFormData = async (request: Request) => {
 
     return { key, name, ext, file };
   } catch (error) {
-    console.log(error);
+    console.log('getFormData', error);
     throw `Getting form data: \n ${error}`;
   }
 };
@@ -118,7 +118,7 @@ export const handleRequest = async (request: Request): Promise<Response> => {
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log('handleRequest', error);
       return new Response(JSON.stringify({ error }), errReqBody);
     }
   }
