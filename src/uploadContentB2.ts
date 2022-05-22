@@ -1,5 +1,3 @@
-import { fileNameFmt } from './fileNameFmt';
-
 import {
   B2AuthResp,
   B2AuthTokens,
@@ -178,12 +176,10 @@ const uploadToB2 = async (
 
 export const getMediaUrl = async (
   name: string,
-  ext: string,
   data: ArrayBuffer
 ): Promise<string> => {
   try {
-    const fileName = fileNameFmt(name);
-    const coverUrl = await uploadToB2(data, `Shelf/${fileName}.${ext}`);
+    const coverUrl = await uploadToB2(data, `Shelf/${name}`);
 
     return coverUrl;
   } catch (error) {
