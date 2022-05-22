@@ -24,7 +24,6 @@ const noAuthReqBody = {
 
 const handleFileUpload = async (name: string, ext: string, file: File) => {
   try {
-    console.log('fileData', file.type, file.size);
     const fileData = await file.arrayBuffer();
     const url = await getMediaUrl(name, ext, fileData);
 
@@ -42,7 +41,7 @@ const getFormData = async (request: Request) => {
     const name = payload.get('name');
     const ext = payload.get('ext');
     const file = payload.get('file');
-    console.log(typeof file);
+
     return { key, name, ext, file };
   } catch (error) {
     console.log('getFormData', error);
