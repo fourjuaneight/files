@@ -18,11 +18,18 @@ import {
  * @returns {Promise<string>} hash of file
  */
 const createHash = async (data: ArrayBuffer) => {
-  const hashBuffer = await crypto.subtle.digest('SHA-1', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  try {
+    const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
 
-  return hashHex;
+    return hashHex;
+  } catch (error) {
+    console.log(error);
+    throw `Creating hash:\n${error}`;
+  }
 };
 
 /**
@@ -34,16 +41,15 @@ const createHash = async (data: ArrayBuffer) => {
  * @returns {Promise<B2AuthTokens>} api endpoint, auth token, and download url
  */
 const authTokens = async (): Promise<B2AuthTokens> => {
-  const token = Buffer.from(`${B2_APP_KEY_ID}:${B2_APP_KEY}`).toString(
-    'base64'
-  );
-  const options = {
-    headers: {
-      Authorization: `Basic ${token}`,
-    },
-  };
-
   try {
+    const token = Buffer.from(`${B2_APP_KEY_ID}:${B2_APP_KEY}`).toString(
+      'base64'
+    );
+    const options = {
+      headers: {
+        Authorization: `Basic ${token}`,
+      },
+    };
     const response = await fetch(
       'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
       options
@@ -175,14 +181,13 @@ export const getMediaUrl = async (
   ext: string,
   data: ArrayBuffer
 ): Promise<string> => {
-  const fileName = fileNameFmt(name);
-
   try {
+    const fileName = fileNameFmt(name);
     const coverUrl = await uploadToB2(data, `Shelf/${fileName}.${ext}`);
 
     return coverUrl;
   } catch (error) {
     console.log(error);
-    throw `Uploading ${name}: \n ${error}`;
+    throw `${error}`;
   }
 };
