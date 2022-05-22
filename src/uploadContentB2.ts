@@ -40,9 +40,7 @@ const createHash = async (data: ArrayBuffer) => {
  */
 const authTokens = async (): Promise<B2AuthTokens> => {
   try {
-    const token = Buffer.from(`${B2_APP_KEY_ID}:${B2_APP_KEY}`).toString(
-      'base64'
-    );
+    const token = btoa(`${B2_APP_KEY_ID}:${B2_APP_KEY}`);
     const options = {
       headers: {
         Authorization: `Basic ${token}`,
