@@ -25,6 +25,7 @@ const noAuthReqBody = {
 const handleFileUpload = async (name: string, ext: string, file: File) => {
   try {
     const fileData = await file.arrayBuffer();
+    console.log('fileData', fileData);
     const url = await getMediaUrl(name, ext, fileData);
 
     return new Response(url, responseInit);
