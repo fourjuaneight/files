@@ -40,8 +40,8 @@ export const handleRequest = async (request: Request): Promise<Response> => {
   }
 
   try {
-    const key = request.headers.get('Key');
-    const name = request.headers.get('Name');
+    const name = request.headers.get('name');
+    const key = request.headers.get('key');
     const file = await request.arrayBuffer();
 
     // check for required fields

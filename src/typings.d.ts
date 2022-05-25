@@ -1,11 +1,3 @@
-/* eslint-disable camelcase */
-export interface RequestFormData {
-  key: string;
-  name: string;
-  ext: string;
-  file: Blob;
-}
-
 // B2
 export interface B2AuthResp {
   absoluteMinimumPartSize: number;
