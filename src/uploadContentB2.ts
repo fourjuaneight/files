@@ -25,8 +25,8 @@ const createHash = async (data: ArrayBuffer) => {
 
     return hashHex;
   } catch (error) {
-    console.log('createHash', error);
-    throw `Creating hash:\n${error}`;
+    console.log(error);
+    throw `(createHash):\n${error}`;
   }
 };
 
@@ -55,7 +55,7 @@ const authTokens = async (): Promise<B2AuthTokens> => {
       const results: B2Error = await response.json();
       const msg = results.message || results.code;
 
-      throw `Getting B2 authentication keys: \n ${results.status}: ${msg}`;
+      throw `(authTokens): \n ${results.status}: ${msg}`;
     }
 
     const results: B2AuthResp = await response.json();
@@ -68,7 +68,7 @@ const authTokens = async (): Promise<B2AuthTokens> => {
 
     return data;
   } catch (error) {
-    console.log('authTokens', error);
+    console.log(error);
     throw error;
   }
 };
@@ -102,7 +102,7 @@ const getUploadUrl = async (): Promise<B2UploadTokens> => {
       const results: B2Error = await response.json();
       const msg = results.message || results.code;
 
-      throw `Getting B2 upload URL: \n ${response.status}: ${msg}`;
+      throw `(getUploadUrl): \n ${response.status}: ${msg}`;
     }
 
     const results: B2UpUrlResp = await response.json();
@@ -115,7 +115,7 @@ const getUploadUrl = async (): Promise<B2UploadTokens> => {
       downloadUrl: authData?.downloadUrl ?? '',
     };
   } catch (error) {
-    console.log('getUploadUrl', error);
+    console.log(error);
     throw error;
   }
 };
@@ -157,14 +157,14 @@ const uploadToB2 = async (
       const results: B2Error = await response.json();
       const msg = results.message || results.code;
 
-      throw `Uploading file to B2 - ${name}: \n ${results.status}: ${msg}`;
+      throw `(uploadToB2) - ${name}: \n ${results.status}: ${msg}`;
     }
 
     const results: B2UploadResp = await response.json();
 
     return `${authData?.downloadUrl}/file/${B2_BUCKET_NAME}/${results.fileName}`;
   } catch (error) {
-    console.log('uploadToB2', error);
+    console.log(error);
     throw error;
   }
 };
@@ -178,7 +178,7 @@ export const getMediaUrl = async (
 
     return coverUrl;
   } catch (error) {
-    console.log('getMediaUrl', error);
-    throw error;
+    console.log(error);
+    throw `(getMediaUrl):\n${error}`;
   }
 };
