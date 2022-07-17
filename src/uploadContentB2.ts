@@ -171,10 +171,11 @@ const uploadToB2 = async (
 
 export const getMediaUrl = async (
   name: string,
-  data: ArrayBuffer
+  data: ArrayBuffer,
+  folder: string
 ): Promise<string> => {
   try {
-    const coverUrl = await uploadToB2(data, `Shelf/${name}`);
+    const coverUrl = await uploadToB2(data, `${folder}/${name}`);
 
     return coverUrl;
   } catch (error) {

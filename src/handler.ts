@@ -40,8 +40,9 @@ export const handleRequest = async (request: Request): Promise<Response> => {
   }
 
   try {
-    const name = request.headers.get('name');
     const key = request.headers.get('key');
+    const name = request.headers.get('name');
+    const folder = request.headers.get('folder');
     const file = await request.arrayBuffer();
 
     // check for required fields
@@ -69,7 +70,7 @@ export const handleRequest = async (request: Request): Promise<Response> => {
           noAuthReqBody
         );
       default: {
-        const url = await getMediaUrl(name as string, file);
+        const url = await getMediaUrl(name as string, file, folder || 'Shelf');
 
         return new Response(url, responseInit);
       }
