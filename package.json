@@ -1,6 +1,6 @@
 {
   "name": "files",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Serverless functions to save files to B2 bucket.",
   "main": "dist/worker.js",
   "scripts": {
