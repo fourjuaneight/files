@@ -1,4 +1,5 @@
 import { getMediaUrl } from './uploadContentB2';
+import { version } from '../package.json';
 
 // default responses
 const responseInit = {
@@ -33,7 +34,7 @@ const noAuthReqBody = {
 export const handleRequest = async (request: Request): Promise<Response> => {
   // POST requests only
   if (request.method !== 'POST') {
-    return new Response(null, {
+    return new Response(JSON.stringify({ version }), {
       status: 405,
       statusText: 'Method Not Allowed',
     });
@@ -49,34 +50,35 @@ export const handleRequest = async (request: Request): Promise<Response> => {
     switch (true) {
       case !name:
         return new Response(
-          JSON.stringify({ error: "Missing 'Name' header." }),
+          JSON.stringify({ error: "Missing 'Name' header.", version }),
           badReqBody
         );
       case !file:
         return new Response(
-          JSON.stringify({ error: 'Missing file.' }),
+          JSON.stringify({ error: 'Missing file.', version }),
           badReqBody
         );
       case !key:
         return new Response(
-          JSON.stringify({ error: "Missing 'Key' header." }),
+          JSON.stringify({ error: "Missing 'Key' header.", version }),
           noAuthReqBody
         );
       case key !== AUTH_KEY:
         return new Response(
           JSON.stringify({
             error: "You're not authorized to access this API.",
+            version,
           }),
           noAuthReqBody
         );
       default: {
         const url = await getMediaUrl(name as string, file, folder || 'Shelf');
 
-        return new Response(url, responseInit);
+        return new Response(JSON.stringify({ url, version }), responseInit);
       }
     }
   } catch (error) {
     console.log('handleRequest', error);
-    return new Response(JSON.stringify({ error }), errReqBody);
+    return new Response(JSON.stringify({ error, version }), errReqBody);
   }
 };
